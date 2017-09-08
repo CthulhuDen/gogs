@@ -215,15 +215,6 @@ func runServ(c *cli.Context) error {
 					user.Name, requestMode, repoFullName)
 			}
 		}
-	} else {
-		setting.NewService()
-		// Check if the key can access to the repository in case of it is a deploy key (a deploy keys != user key).
-		// A deploy key doesn't represent a signed in user, so in a site with Service.RequireSignInView activated
-		// we should give read access only in repositories where this deploy key is in use. In other case, a server
-		// or system using an active deploy key can get read access to all the repositories in a Gogs service.
-		if key.IsDeployKey() && setting.Service.RequireSignInView {
-			checkDeployKey(key, repo)
-		}
 	}
 
 	// Update user key activity.
